@@ -175,8 +175,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "S3Explorer",
+    "appId": "com.s3explorer",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
