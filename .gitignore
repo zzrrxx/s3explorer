@@ -128,3 +128,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+/.erb/dll/preload.bundle.dev.js
+/.erb/dll/preload.js
+/.erb/dll/main.bundle.dev.js
+/.erb/dll/node_modules_node-fetch_src_utils_multipart-parser_js.dev.dll.js
