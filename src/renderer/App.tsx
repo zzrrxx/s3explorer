@@ -4,6 +4,8 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'tailwindcss/tailwind.css';
+import BucketTable from './components/buckettable/bucket-table';
+import { Bucket, columns } from './components/buckettable/columns';
 // import {
 //   SidebarInset,
 //   SidebarProvider,
@@ -57,8 +59,31 @@ import 'tailwindcss/tailwind.css';
 //   );
 // }
 
+function getBuckets(): Bucket[] {
+  return [
+    {
+      id: '1',
+      name: 'amzn-s3-demo-bucket',
+      creationDate: '2019-12-11T23:32:47+00:00',
+      region: 'Chengdu',
+    },
+    {
+      id: '2',
+      name: 'amzn-s3-demo-bucket-2',
+      creationDate: '2019-12-11T23:32:47+00:00',
+      region: 'Beijing',
+    },
+  ];
+}
+
 function Hello() {
-  return <div>Hello</div>;
+  const buckets = getBuckets();
+
+  return (
+    <div className="container mx-auto py-10">
+      <BucketTable columns={columns} data={buckets} />
+    </div>
+  );
 }
 
 export default function App() {
