@@ -56,6 +56,10 @@ export const columns: ColumnDef<Bucket>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => (
+      <Button variant="link">{row.getValue<string>('name')}</Button>
+    ),
+    enableHiding: false,
   },
   {
     accessorKey: 'region',
@@ -97,5 +101,6 @@ export const columns: ColumnDef<Bucket>[] = [
         </DropdownMenu>
       );
     },
+    enableHiding: false,
   },
 ];

@@ -12,6 +12,13 @@ import {
 } from '@tanstack/react-table';
 import React from 'react';
 import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
+  RotateCw,
+  SquarePlus,
+} from 'lucide-react';
+import {
   Table,
   TableBody,
   TableCell,
@@ -61,6 +68,25 @@ export default function BucketTable<TData, TValue>({
 
   return (
     <div>
+      <div className="flex items-center">
+        <div className="flex items-left border border-gray-300 rounded-md">
+          <Button variant="ghost" size="icon" disabled>
+            <ArrowLeft />
+          </Button>
+          <Button variant="ghost" size="icon" disabled>
+            <ArrowRight />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <ArrowUp />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <RotateCw />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <SquarePlus />
+          </Button>
+        </div>
+      </div>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter buckets..."
@@ -70,6 +96,9 @@ export default function BucketTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        <Button variant="outline" className="mx-1">
+          <SquarePlus />
+        </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
