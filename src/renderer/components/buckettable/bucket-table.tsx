@@ -15,7 +15,11 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
+  ChevronDown,
+  ChevronRight,
+  House,
   RotateCw,
+  Slash,
   SquarePlus,
 } from 'lucide-react';
 import {
@@ -32,8 +36,17 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from '../ui/breadcrumb';
 
 interface BucketTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -68,8 +81,8 @@ export default function BucketTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center">
-        <div className="flex items-left border border-gray-300 rounded-md">
+      <div className="flex items-center gap-2">
+        <div className="flex items-left border border-gray-300 rounded-md h-10">
           <Button variant="ghost" size="icon" disabled>
             <ArrowLeft />
           </Button>
@@ -83,8 +96,55 @@ export default function BucketTable<TData, TValue>({
             <RotateCw />
           </Button>
           <Button variant="ghost" size="icon">
-            <SquarePlus />
+            <House />
           </Button>
+        </div>
+        <div className="flex flex-1 items-center border border-gray-300 rounded-md px-1 h-10">
+          <Breadcrumb className="w-full">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#">RootBucket</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <ChevronRight />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="#">Level1</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <ChevronRight />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-1">
+                    Level2
+                    <ChevronDown />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem>Level2.2</DropdownMenuItem>
+                    <DropdownMenuItem>Level2.3</DropdownMenuItem>
+                    <DropdownMenuItem>Level2.4</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <ChevronRight />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-1">
+                    <BreadcrumbEllipsis className="h-4 w-4" />
+                    <span className="sr-only">Toggle menu</span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem>Documentation</DropdownMenuItem>
+                    <DropdownMenuItem>Themes</DropdownMenuItem>
+                    <DropdownMenuItem>GitHub</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
       <div className="flex items-center py-4">
