@@ -1,11 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
 
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  MemoryRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import './App.css';
 import 'tailwindcss/tailwind.css';
 import BucketTable from './components/buckettable/bucket-table';
 import { Bucket, columns } from './components/buckettable/columns';
+import Login from './Login';
 // import {
 //   SidebarInset,
 //   SidebarProvider,
@@ -87,10 +93,18 @@ function Hello() {
 }
 
 export default function App() {
+  const isAuthenticated = false;
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? <Hello /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

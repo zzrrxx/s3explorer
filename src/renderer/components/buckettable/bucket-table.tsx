@@ -19,7 +19,6 @@ import {
   ChevronRight,
   House,
   RotateCw,
-  Slash,
   SquarePlus,
 } from 'lucide-react';
 import {
