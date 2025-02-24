@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -14,7 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import S3Providers from 'src/shared/S3Providers';
+import S3Provider from 'src/shared/S3Provider';
 import {
   Form,
   FormControl,
@@ -23,15 +24,13 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from './ui/command';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name must be at least 1 character.' }),
@@ -44,18 +43,13 @@ const formSchema = z.object({
     .min(1, { message: 'Secret Access Key must be at least 1 characters.' }),
 });
 
-const s3Types = [
-  'Amazon S3',
-  'Aliyun OSS',
-  'Huawei OBS',
-  'Tencent COS',
-  'Custom',
-];
-
 export default function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'>) {
+  const [s3Providers, setS3Providers] = useState<S3Providers | null>(null);
+  const [provider, setProvider] = useState<S3Provider | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,6 +61,19 @@ export default function LoginForm({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+  }
+
+  useEffect(() => {
+    window.electron.ipcRenderer.once('getS3Providers', (arg) => {
+      const providers: S3Providers = arg as S3Providers;
+      setS3Providers(providers);
+      setProvider(providers.providers[0]);
+    });
+    window.electron.ipcRenderer.sendMessage('getS3Providers', []);
+  }, [form]);
+
+  if (s3Providers === null || provider === null) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -99,57 +106,27 @@ export default function LoginForm({
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>S3 Type</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              'w-full justify-between',
-                              !field.value && 'text-muted-foreground',
-                            )}
-                          >
-                            {field.value
-                              ? s3Types.find((s3Type) => s3Type === field.value)
-                              : 'Select S3 Type'}
-                            <ChevronsUpDown className="opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
-                        <Command>
-                          <CommandInput
-                            placeholder="Search framework..."
-                            className="h-9"
-                          />
-                          <CommandList>
-                            <CommandEmpty>No framework found.</CommandEmpty>
-                            <CommandGroup>
-                              {s3Types.map((s3Type) => (
-                                <CommandItem
-                                  value={s3Type}
-                                  key={s3Type}
-                                  onSelect={() => {
-                                    form.setValue('s3Type', s3Type);
-                                  }}
-                                >
-                                  {s3Type}
-                                  <Check
-                                    className={cn(
-                                      'ml-auto',
-                                      s3Type === field.value
-                                        ? 'opacity-100'
-                                        : 'opacity-0',
-                                    )}
-                                  />
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      required
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a S3 Type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {s3Providers.providers.map((p) => (
+                          <SelectItem value={p.name} key={p.name}>
+                            {p.name}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="Custom" key="Custom">
+                          Custom
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

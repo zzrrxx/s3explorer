@@ -1,0 +1,85 @@
+{
+	"Name": "Tencent COS",
+	"VirtualHostingPath": true,
+	"SSL": true,
+	"DefaultRegion": "Guangzhou",
+	"EndpointTemplate": "cos.%REGION%.myqcloud.com",
+	"Endpoints": [
+		{
+			"Region": "Beijing Zone 1",
+			"RegionID": "ap-beijing-1"
+		},
+		{
+			"Region": "Beijing",
+			"RegionID": "ap-beijing"
+		},
+		{
+			"Region": "Nanjing",
+			"RegionID": "ap-nanjing"
+		},
+		{
+			"Region": "Shanghai",
+			"RegionID": "ap-shanghai"
+		},
+		{
+			"Region": "Guangzhou",
+			"RegionID": "ap-guangzhou"
+		},
+		{
+			"Region": "Chengdu",
+			"RegionID": "ap-chengdu"
+		},
+		{
+			"Region": "Chongqing",
+			"RegionID": "ap-chongqing"
+		},
+		{
+			"Region": "Hong Kong",
+			"RegionID": "ap-hongkong"
+		},
+		{
+			"Region": "Singapore",
+			"RegionID": "ap-singapore"
+		},
+		{
+			"Region": "Mumbai",
+			"RegionID": "ap-mumbai"
+		},
+		{
+			"Region": "Jakarta",
+			"RegionID": "ap-jakarta"
+		},
+		{
+			"Region": "Seoul",
+			"RegionID": "ap-seoul"
+		},
+		{
+			"Region": "Bangkok",
+			"RegionID": "ap-bangkok"
+		},
+		{
+			"Region": "Tokyo",
+			"RegionID": "ap-tokyo"
+		},
+		{
+			"Region": "Silicon Valley (US West)",
+			"RegionID": "na-siliconvalley"
+		},
+		{
+			"Region": "Virginia (US East)",
+			"RegionID": "na-ashburn"
+		},
+		{
+			"Region": "Toronto",
+			"RegionID": "na-toronto"
+		},
+		{
+			"Region": "São Paulo",
+			"RegionID": "sa-saopaulo"
+		},
+		{
+			"Region": "Frankfurt",
+			"RegionID": "eu-frankfurt"
+		}
+	]
+}

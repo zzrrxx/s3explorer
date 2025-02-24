@@ -9,11 +9,15 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
+import fs from 'fs';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import S3Providers from 'src/shared/S3Providers';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import S3Provider from 'src/shared/S3Provider';
+import decodeS3Provider from 'src/shared/S3ProviderDecoder';
 
 class AppUpdater {
   constructor() {
@@ -110,6 +114,22 @@ const createWindow = async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
+
+  ipcMain.on('getS3Providers', async (event) => {
+    const providers: S3Providers = new S3Providers();
+    const s3providersDir = getAssetPath('s3providers');
+    const files = await fs.promises.readdir(s3providersDir);
+
+    files.forEach((file) => {
+      const jsonData = fs.readFileSync(
+        path.join(s3providersDir, file),
+        'utf-8',
+      );
+      const provider: S3Provider = decodeS3Provider(JSON.parse(jsonData));
+      providers.providers.push(provider);
+    });
+    event.reply('getS3Providers', providers);
+  });
 };
 
 /**

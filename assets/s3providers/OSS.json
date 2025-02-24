@@ -1,0 +1,121 @@
+{
+	"Name": "Aliyun OSS",
+	"VirtualHostingPath": true,
+	"SSL": true,
+	"DefaultRegion": "hangzhou",
+	"EndpointTemplate": "%REGION%.aliyuncs.com",
+	"Endpoints": [
+		{
+			"Region": "hangzhou",
+			"RegionID": "oss-cn-hangzhou"
+		},
+		{
+			"Region": "shanghai",
+			"RegionID": "oss-cn-shanghai"
+		},
+		{
+			"Region": "nanjing",
+			"RegionID": "oss-cn-nanjing"
+		},
+		{
+			"Region": "fuzhou",
+			"RegionID": "oss-cn-fuzhou"
+		},
+		{
+			"Region": "qingdao",
+			"RegionID": "oss-cn-qingdao"
+		},
+		{
+			"Region": "beijing",
+			"RegionID": "oss-cn-beijing"
+		},
+		{
+			"Region": "zhangjiakou",
+			"RegionID": "oss-cn-zhangjiakou"
+		},
+		{
+			"Region": "huhehaote",
+			"RegionID": "oss-cn-huhehaote"
+		},
+		{
+			"Region": "wulanchabu",
+			"RegionID": "oss-cn-wulanchabu"
+		},
+		{
+			"Region": "shenzhen",
+			"RegionID": "oss-cn-shenzhen"
+		},
+		{
+			"Region": "heyuan",
+			"RegionID": "oss-cn-heyuan"
+		},
+		{
+			"Region": "guangzhou",
+			"RegionID": "oss-cn-guangzhou"
+		},
+		{
+			"Region": "chengdu",
+			"RegionID": "oss-cn-chengdu"
+		},
+		{
+			"Region": "hongkong",
+			"RegionID": "oss-cn-hongkong"
+		},
+		{
+			"Region": "silicon valley",
+			"RegionID": "oss-us-west-1"
+		},
+		{
+			"Region": "virginia",
+			"RegionID": "oss-us-east-1"
+		},
+		{
+			"Region": "Tokyo",
+			"RegionID": "oss-ap-northeast-1"
+		},
+		{
+			"Region": "Seoul",
+			"RegionID": "oss-ap-northeast-2"
+		},
+		{
+			"Region": "Singapore",
+			"RegionID": "oss-ap-southeast-1"
+		},
+		{
+			"Region": "sydney",
+			"RegionID": "oss-ap-southeast-2"
+		},
+		{
+			"Region": "Kuala Lumpur",
+			"RegionID": "oss-ap-southeast-3"
+		},
+		{
+			"Region": "jakarta",
+			"RegionID": "oss-ap-southeast-5"
+		},
+		{
+			"Region": "Manila",
+			"RegionID": "oss-ap-southeast-6"
+		},
+		{
+			"Region": "Bangkok",
+			"RegionID": "oss-ap-southeast-7"
+		},
+		{
+			"Region": "mumbai",
+			"RegionID": "oss-ap-south-1"
+		},
+		{
+			"Region": "frankfurt",
+			"RegionID": "oss-eu-central-1"
+		},
+		{
+			"Region": "London",
+			"RegionID": "oss-eu-west-1"
+		},
+		{
+			"Region": "dubai",
+			"RegionID": "oss-me-east-1"
+		}
+	]
+}

@@ -1,0 +1,121 @@
+{
+	"Name": "Amazon S3",
+	"VirtualHostingPath": true,
+	"SSL": true,
+	"DefaultRegion": "US East (N. Virginia)",
+	"EndpointTemplate": "s3.%REGION%.amazonaws.com",
+	"Endpoints": [
+		{
+			"Region": "US East (Ohio)",
+			"RegionID": "us-east-2"
+		},
+		{
+			"Region": "US East (N. Virginia)",
+			"RegionID": "us-east-1"
+		},
+		{
+			"Region": "US West (N. California)",
+			"RegionID": "us-west-1"
+		},
+		{
+			"Region": "US West (Oregon)",
+			"RegionID": "us-west-2"
+		},
+		{
+			"Region": "Africa (Cape Town)",
+			"RegionID": "af-south-1"
+		},
+		{
+			"Region": "Asia Pacific (Hong Kong)",
+			"RegionID": "ap-east-1"
+		},
+		{
+			"Region": "Asia Pacific (Hyderabad)",
+			"RegionID": "ap-south-2"
+		},
+		{
+			"Region": "Asia Pacific (Jakarta)",
+			"RegionID": "ap-southeast-3"
+		},
+		{
+			"Region": "Asia Pacific (Melbourne)",
+			"RegionID": "ap-southeast-4"
+		},
+		{
+			"Region": "Asia Pacific (Mumbai)",
+			"RegionID": "ap-south-1"
+		},
+		{
+			"Region": "Asia Pacific (Osaka)",
+			"RegionID": "ap-northeast-3"
+		},
+		{
+			"Region": "Asia Pacific (Seoul)",
+			"RegionID": "ap-northeast-2"
+		},
+		{
+			"Region": "Asia Pacific (Singapore)",
+			"RegionID": "ap-southeast-1"
+		},
+		{
+			"Region": "Asia Pacific (Sydney)",
+			"RegionID": "ap-southeast-2"
+		},
+		{
+			"Region": "Asia Pacific (Tokyo)",
+			"RegionID": "ap-northeast-1"
+		},
+		{
+			"Region": "Canada (Central)",
+			"RegionID": "ca-central-1"
+		},
+		{
+			"Region": "Canada West (Calgary)",
+			"RegionID": "ca-west-1"
+		},
+		{
+			"Region": "Europe (Frankfurt)",
+			"RegionID": "eu-central-1"
+		},
+		{
+			"Region": "Europe (Ireland)",
+			"RegionID": "eu-west-1"
+		},
+		{
+			"Region": "Europe (London)",
+			"RegionID": "eu-west-2"
+		},
+		{
+			"Region": "Europe (Milan)",
+			"RegionID": "eu-south-1"
+		},
+		{
+			"Region": "Europe (Paris)",
+			"RegionID": "eu-west-3"
+		},
+		{
+			"Region": "Europe (Stockholm)",
+			"RegionID": "eu-north-1"
+		},
+		{
+			"Region": "Europe (Zurich)",
+			"RegionID": "eu-central-2"
+		},
+		{
+			"Region": "Israel (Tel Aviv)",
+			"RegionID": "il-central-1"
+		},
+		{
+			"Region": "Middle East (Bahrain)",
+			"RegionID": "me-south-1"
+		},
+		{
+			"Region": "Middle East (UAE)",
+			"RegionID": "me-central-1"
+		},
+		{
+			"Region": "South America (São Paulo)",
+			"RegionID": "sa-east-1"
+		}
+	]
+}

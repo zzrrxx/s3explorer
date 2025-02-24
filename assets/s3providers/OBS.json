@@ -1,0 +1,69 @@
+{
+	"Name": "Huawei OBS",
+	"VirtualHostingPath": true,
+	"SSL": true,
+	"DefaultRegion": "CN South-Guangzhou",
+	"EndpointTemplate": "obs.%REGION%.myhuaweicloud.com",
+	"Endpoints": [
+		{
+			"Region": "AF-Johannesburg",
+			"RegionID": "af-south-1"
+		},
+		{
+			"Region": "AP-Bangkok",
+			"RegionID": "ap-southeast-2"
+		},
+		{
+			"Region": "AP-Singapore",
+			"RegionID": "ap-southeast-3"
+		},
+		{
+			"Region": "CN East-Shanghai1",
+			"RegionID": "cn-east-3"
+		},
+		{
+			"Region": "CN East-Shanghai2",
+			"RegionID": "cn-east-2"
+		},
+		{
+			"Region": "CN North-Beijing1",
+			"RegionID": "cn-north-1"
+		},
+		{
+			"Region": "CN North-Beijing4",
+			"RegionID": "cn-north-4"
+		},
+		{
+			"Region": "CN South-Guangzhou",
+			"RegionID": "cn-south-1"
+		},
+		{
+			"Region": "CN-Hong Kong",
+			"RegionID": "ap-southeast-1"
+		},
+		{
+			"Region": "LA-Mexico City1",
+			"RegionID": "na-mexico-1"
+		},
+		{
+			"Region": "LA-Mexico City2",
+			"RegionID": "la-north-2"
+		},
+		{
+			"Region": "LA-Santiago",
+			"RegionID": "la-south-2"
+		},
+		{
+			"Region": "LA-Sao Paulo1",
+			"RegionID": "sa-brazil-1"
+		},
+		{
+			"Region": "ME-Riyadh",
+			"RegionID": "me-east-1"
+		},
+		{
+			"Region": "TR-Istanbul",
+			"RegionID": "tr-west-1"
+		}
+	]
+}
