@@ -32,16 +32,30 @@ import {
   SelectValue,
 } from './ui/select';
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: 'Name must be at least 1 character.' }),
-  s3Type: z.string().min(1, { message: 'Please select a S3 Type.' }),
-  accessKeyID: z
-    .string()
-    .min(1, { message: 'Access Key ID must be at least 1 characters.' }),
-  secretAccessKey: z
-    .string()
-    .min(1, { message: 'Secret Access Key must be at least 1 characters.' }),
-});
+const formSchema = z
+  .object({
+    name: z.string().min(1, { message: 'Name must be at least 1 character.' }),
+    s3Type: z.string().min(1, { message: 'Please select a S3 Type.' }),
+    accessKeyID: z
+      .string()
+      .min(1, { message: 'Access Key ID must be at least 1 characters.' }),
+    secretAccessKey: z
+      .string()
+      .min(1, { message: 'Secret Access Key must be at least 1 characters.' }),
+    endpoint: z.string().optional(),
+  })
+  .superRefine((data, ctx: z.RefinementCtx) => {
+    if (
+      data.s3Type === 'Custom' &&
+      (!data.endpoint || data.endpoint.trim() === '')
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['endpoint'],
+        message: 'Endpoint is required when S3 Type is Custom',
+      });
+    }
+  });
 
 export default function LoginForm({
   className,
@@ -63,6 +77,15 @@ export default function LoginForm({
     console.log(values);
   }
 
+  const handleValueChange = (value: string) => {
+    form.setValue('s3Type', value, { shouldValidate: true });
+
+    const curProvider = s3Providers?.providers.find((prov: S3Provider) => {
+      return prov.name === value;
+    });
+    setProvider(curProvider || null);
+  };
+
   useEffect(() => {
     window.electron.ipcRenderer.once('getS3Providers', (arg) => {
       const providers: S3Providers = arg as S3Providers;
@@ -72,7 +95,7 @@ export default function LoginForm({
     window.electron.ipcRenderer.sendMessage('getS3Providers', []);
   }, [form]);
 
-  if (s3Providers === null || provider === null) {
+  if (s3Providers === null) {
     return <div>Loading...</div>;
   }
 
@@ -107,7 +130,7 @@ export default function LoginForm({
                   <FormItem className="flex flex-col">
                     <FormLabel>S3 Type</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={handleValueChange}
                       defaultValue={field.value}
                       required
                     >
@@ -131,6 +154,26 @@ export default function LoginForm({
                   </FormItem>
                 )}
               />
+
+              {provider === null && (
+                <FormField
+                  control={form.control}
+                  name="endpoint"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Endpoint</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Custom endpoint: [http/https]://host:port/url"
+                          {...field}
+                          required
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
               <FormField
                 control={form.control}
@@ -165,7 +208,14 @@ export default function LoginForm({
                 )}
               />
 
-              <Button type="submit">Add</Button>
+              <div className="grid grid-cols-2 gap-8">
+                <Button type="button" className="w-full" variant="secondary">
+                  Advanced
+                </Button>
+                <Button type="submit" className="w-full">
+                  Login
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
