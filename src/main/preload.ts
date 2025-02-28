@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'getS3Providers';
+export type Channels = 'ipc-example' | 'getS3Providers' | 'addAccount';
 
 const electronHandler = {
   ipcRenderer: {

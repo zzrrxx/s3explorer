@@ -18,6 +18,9 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import S3Provider from 'src/shared/S3Provider';
 import decodeS3Provider from 'src/shared/S3ProviderDecoder';
+import { appConfigLoad, appConfigSave } from 'src/shared/AppConfigLoadSave';
+import AppConfig from 'src/shared/AppConfig';
+import S3Account from 'src/shared/S3Account';
 
 class AppUpdater {
   constructor() {
@@ -28,6 +31,7 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let appConfig: AppConfig | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -132,6 +136,24 @@ const createWindow = async () => {
   });
 };
 
+ipcMain.on('addAccount', async (event, args) => {
+  if (appConfig !== null) {
+    const acct = args[0] as S3Account;
+    appConfig.accounts.push(acct);
+    try {
+      appConfigSave(appConfig);
+      event.reply('addAccount', {});
+    } catch (error) {
+      event.reply('addAccount', { code: -1, message: error });
+    }
+  } else {
+    event.reply('addAccount', {
+      code: -1,
+      message: 'configuration is not loaded successfully',
+    });
+  }
+});
+
 /**
  * Add event listeners...
  */
@@ -147,10 +169,23 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    try {
+      appConfig = appConfigLoad();
+    } catch (error) {
+      console.error('Failed to load configuration file:', error);
+    }
+
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
+
+      try {
+        appConfig = appConfigLoad();
+      } catch (error) {
+        console.error('Failed to load configuration file:', error);
+      }
+
       if (mainWindow === null) createWindow();
     });
   })
