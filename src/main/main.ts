@@ -14,13 +14,13 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import S3Providers from 'src/shared/S3Providers';
-import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
 import S3Provider from 'src/shared/S3Provider';
 import decodeS3Provider from 'src/shared/S3ProviderDecoder';
 import { appConfigLoad, appConfigSave } from 'src/shared/AppConfigLoadSave';
 import AppConfig from 'src/shared/AppConfig';
 import S3Account from 'src/shared/S3Account';
+import MenuBuilder from './menu';
+import { resolveHtmlPath } from './util';
 
 class AppUpdater {
   constructor() {
@@ -138,7 +138,7 @@ const createWindow = async () => {
 
 ipcMain.on('addAccount', async (event, args) => {
   if (appConfig !== null) {
-    const acct = args[0] as S3Account;
+    const acct = args as S3Account;
     appConfig.accounts.push(acct);
     try {
       appConfigSave(appConfig);

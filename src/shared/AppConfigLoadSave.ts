@@ -26,9 +26,12 @@ export function appConfigLoad(): AppConfig {
 
   if (fs.existsSync(configPath)) {
     const configData = fs.readFileSync(configPath, 'utf-8');
-    const json = JSON.parse(configData);
-
-    appConfig.accounts = json.accounts.map((acct: any) => decodeAccount(acct));
+    if (configData !== '') {
+      const json = JSON.parse(configData);
+      appConfig.accounts = json.accounts.map((acct: any) =>
+        decodeAccount(acct),
+      );
+    }
   }
 
   return appConfig;

@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react';
 import S3Provider from 'src/shared/S3Provider';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import S3Account from 'src/shared/S3Account';
+import { isApiError } from 'src/shared/ApiError';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -59,6 +63,8 @@ const formSchema = z
   });
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const [s3Providers, setS3Providers] = useState<S3Providers | null>(null);
   const [provider, setProvider] = useState<S3Provider | null>(null);
 
@@ -66,13 +72,45 @@ export default function LoginPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
+      s3Type: '',
+      endpoint: '',
       accessKeyID: '',
       secretAccessKey: '',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (s3Providers === null) return;
+
+    const acct: S3Account = {
+      name: values.name,
+      endpoint: '',
+      accessKey: values.accessKeyID,
+      secretKey: values.secretAccessKey,
+      region: '',
+      useTls: false,
+      useVirtualHostingPath: false,
+    };
+
+    if (values.s3Type === 'custom') {
+      acct.endpoint = values.endpoint || '';
+    } else {
+      const curProvider = s3Providers.providers.find((prov: S3Provider) => {
+        return prov.name === values.s3Type;
+      });
+      if (curProvider === null || curProvider === undefined) return;
+
+      const endpoint = curProvider.endpoints.find(
+        (value) => value.region === curProvider.defaultRegion,
+      );
+      if (endpoint) {
+        acct.endpoint = endpoint.url;
+      }
+      acct.useTls = curProvider.useTLS;
+      acct.useVirtualHostingPath = curProvider.useVirtualHostingPath;
+    }
+
+    window.electron.ipcRenderer.sendMessage('addAccount', acct);
   }
 
   const handleValueChange = (value: string) => {
@@ -85,13 +123,32 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    window.electron.ipcRenderer.once('getS3Providers', (arg) => {
-      const providers: S3Providers = arg as S3Providers;
-      setS3Providers(providers);
-      setProvider(providers.providers[0]);
-    });
+    const unsubGetS3Provicers = window.electron.ipcRenderer.on(
+      'getS3Providers',
+      (arg: any) => {
+        const providers: S3Providers = arg as S3Providers;
+        setS3Providers(providers);
+        setProvider(providers.providers[0]);
+      },
+    );
     window.electron.ipcRenderer.sendMessage('getS3Providers', []);
-  }, [form]);
+
+    const unsubAddAccount = window.electron.ipcRenderer.on(
+      'addAccount',
+      (arg: any) => {
+        if (isApiError(arg)) {
+          toast.error(`Add acount failed: ${arg.code}: ${arg.message}`);
+        } else {
+          navigate('/');
+        }
+      },
+    );
+
+    return () => {
+      unsubGetS3Provicers();
+      unsubAddAccount();
+    };
+  }, [form, navigate]);
 
   if (s3Providers === null) {
     return <div>Loading...</div>;
