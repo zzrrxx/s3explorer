@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import 'tailwindcss/tailwind.css';
+import { Toaster } from 'sonner';
 import BucketTable from './components/buckettable/bucket-table';
 import { Bucket, columns } from './components/buckettable/columns';
 import Login from './Login';
@@ -106,6 +107,7 @@ export default function App() {
         />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Toaster />
     </Router>
   );
 }
