@@ -28,6 +28,7 @@ export function appConfigLoad(): AppConfig {
     const configData = fs.readFileSync(configPath, 'utf-8');
     if (configData !== '') {
       const json = JSON.parse(configData);
+      appConfig.version = String(json.version);
       appConfig.accounts = json.accounts.map((acct: any) =>
         decodeAccount(acct),
       );
