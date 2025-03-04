@@ -9,7 +9,10 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import 'tailwindcss/tailwind.css';
-import { Toaster } from 'sonner';
+import { toast, Toaster } from 'sonner';
+import { useEffect, useState } from 'react';
+import { isApiError } from 'src/shared/ApiError';
+import AppConfig from 'src/shared/AppConfig';
 import BucketTable from './components/buckettable/bucket-table';
 import { Bucket, columns } from './components/buckettable/columns';
 import Login from './Login';
@@ -94,7 +97,29 @@ function Hello() {
 }
 
 export default function App() {
-  const isAuthenticated = false;
+  const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
+
+  useEffect(() => {
+    const unsubGetAppConfig = window.electron.ipcRenderer.on(
+      'getAppConfig',
+      (data: any) => {
+        if (isApiError(data)) {
+          toast.error('Failed to load application configuration');
+        } else {
+          setAppConfig(data as AppConfig);
+        }
+      },
+    );
+    window.electron.ipcRenderer.sendMessage('getAppConfig');
+
+    return () => {
+      unsubGetAppConfig();
+    };
+  }, []);
+
+  if (appConfig === null) {
+    return <div> Loading </div>;
+  }
 
   return (
     <Router>
@@ -102,7 +127,11 @@ export default function App() {
         <Route
           path="/"
           element={
-            isAuthenticated ? <Hello /> : <Navigate to="/login" replace />
+            appConfig.accounts.length > 0 ? (
+              <Hello />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
         <Route path="/login" element={<Login />} />

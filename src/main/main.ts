@@ -154,6 +154,17 @@ ipcMain.on('addAccount', async (event, args) => {
   }
 });
 
+ipcMain.on('getAppConfig', async (event) => {
+  if (appConfig !== null) {
+    event.reply('getAppConfig', appConfig);
+  } else {
+    event.reply('getAppConfig', {
+      code: -1,
+      message: 'configuration is not loaded successfully',
+    });
+  }
+});
+
 /**
  * Add event listeners...
  */
