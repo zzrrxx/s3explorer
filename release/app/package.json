@@ -6,7 +6,7 @@
   "author": {
     "name": "Electron React Boilerplate Maintainers",
     "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "url": "https://github.com/zzrrxx/s3explorer"
   },
   "main": "./dist/main/main.js",
   "scripts": {
