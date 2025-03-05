@@ -5,6 +5,7 @@
 
 import * as React from 'react';
 import {
+  AppWindow,
   AudioWaveform,
   BookOpen,
   Bot,
@@ -17,17 +18,19 @@ import {
   SquareTerminal,
 } from 'lucide-react';
 
-import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
-import { NavUser } from '@/components/nav-user';
-import { TeamSwitcher } from '@/components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import TeamSwitcher from './team-switcher';
+import NavUser from './nav-user';
 
 // This is sample data.
 const data = {
@@ -166,8 +169,16 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip="Explorer">
+                <AppWindow />
+                <span>Explorer</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
