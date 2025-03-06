@@ -46,6 +46,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb';
+import BucketTablePagination from './bucket-table-pagination';
 
 interface BucketTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -238,28 +239,7 @@ export default function BucketTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div>
+      <BucketTablePagination table={table} />
     </div>
   );
 }
