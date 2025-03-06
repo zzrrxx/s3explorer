@@ -33,7 +33,7 @@ export default function BucketsExplorer() {
   const buckets = getBuckets();
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="w-full p-6">
       <BucketTable columns={columns} data={buckets} />
     </div>
   );

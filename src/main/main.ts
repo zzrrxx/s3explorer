@@ -79,8 +79,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1280,
+    height: 700, // Should be 720, but title bar and the form title occupy part of it.
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
