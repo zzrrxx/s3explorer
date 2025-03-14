@@ -92,7 +92,7 @@ export default function LoginPage() {
       useVirtualHostingPath: false,
     };
 
-    if (values.s3Type === 'custom') {
+    if (values.s3Type === 'Custom') {
       acct.endpoint = values.endpoint || '';
     } else {
       const curProvider = s3Providers.providers.find((prov: S3Provider) => {
